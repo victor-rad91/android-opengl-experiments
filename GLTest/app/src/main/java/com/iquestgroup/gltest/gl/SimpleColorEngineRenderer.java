@@ -9,11 +9,11 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 
-class Renderer implements GLSurfaceView.Renderer {
+class SimpleColorEngineRenderer implements GLSurfaceView.Renderer {
 
   private SimpleColorEngine engine;
 
-  Renderer(SimpleColorEngine engine) {
+  SimpleColorEngineRenderer(SimpleColorEngine engine) {
     this.engine = engine;
   }
 

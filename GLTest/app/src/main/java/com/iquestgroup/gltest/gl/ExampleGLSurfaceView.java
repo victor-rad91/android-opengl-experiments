@@ -27,7 +27,7 @@ public class ExampleGLSurfaceView extends GLSurfaceView implements SimpleColorEn
   private void init() {
     setEGLContextClientVersion(3);
     engine = new SimpleColorEngine();
-    setRenderer(new com.iquestgroup.gltest.gl.Renderer(engine));
+    setRenderer(new SimpleColorEngineRenderer(engine));
     engine.setListener(this);
     setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
   }
