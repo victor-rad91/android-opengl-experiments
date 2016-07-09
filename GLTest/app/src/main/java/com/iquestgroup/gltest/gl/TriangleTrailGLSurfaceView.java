@@ -7,19 +7,19 @@ import android.view.MotionEvent;
 import com.iquestgroup.gltest.engine.SimpleColorEngine;
 
 
-public class ExampleGLSurfaceView extends GLSurfaceView implements SimpleColorEngine.EngineUpdateListener {
+public class TriangleTrailGLSurfaceView extends GLSurfaceView implements SimpleColorEngine.EngineUpdateListener {
 
   private float previousX;
   private float previousY;
 
   private SimpleColorEngine engine;
 
-  public ExampleGLSurfaceView(Context context) {
+  public TriangleTrailGLSurfaceView(Context context) {
     super(context);
     init();
   }
 
-  public ExampleGLSurfaceView(Context context, AttributeSet attrs) {
+  public TriangleTrailGLSurfaceView(Context context, AttributeSet attrs) {
     super(context, attrs);
     init();
   }

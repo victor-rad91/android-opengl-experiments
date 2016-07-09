@@ -6,9 +6,9 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.iquestgroup.gltest.MainActivity">
+    tools:context="com.iquestgroup.gltest.activities.TriangleTrailActivity">
 
-  <com.iquestgroup.gltest.gl.ExampleGLSurfaceView
+  <com.iquestgroup.gltest.gl.TriangleTrailGLSurfaceView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:id="@+id/glSurfaceView"
