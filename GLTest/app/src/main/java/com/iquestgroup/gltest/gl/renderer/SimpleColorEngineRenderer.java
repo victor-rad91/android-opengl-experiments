@@ -1,4 +1,4 @@
-package com.iquestgroup.gltest.gl;
+package com.iquestgroup.gltest.gl.renderer;
 
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
@@ -9,11 +9,11 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 
-class SimpleColorEngineRenderer implements GLSurfaceView.Renderer {
+public class SimpleColorEngineRenderer implements GLSurfaceView.Renderer {
 
   private SimpleColorEngine engine;
 
-  SimpleColorEngineRenderer(SimpleColorEngine engine) {
+  public SimpleColorEngineRenderer(SimpleColorEngine engine) {
     this.engine = engine;
   }
 

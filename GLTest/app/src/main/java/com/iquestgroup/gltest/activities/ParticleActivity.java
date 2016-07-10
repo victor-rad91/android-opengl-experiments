@@ -3,28 +3,32 @@ package com.iquestgroup.gltest.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import com.iquestgroup.gltest.R;
-import com.iquestgroup.gltest.gl.view.TriangleTrailGLSurfaceView;
+import com.iquestgroup.gltest.gl.view.ParticleGLSurfaceView;
 
-public class TriangleTrailActivity extends Activity {
+/**
+ * Created by victor.rad on 10/07/16.
+ */
 
-  private TriangleTrailGLSurfaceView glView;
+public class ParticleActivity extends Activity {
+
+  private ParticleGLSurfaceView view;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_triangle_trail);
-    glView = (TriangleTrailGLSurfaceView) findViewById(R.id.glSurfaceView);
+    setContentView(R.layout.activity_particle);
+    view = (ParticleGLSurfaceView) findViewById(R.id.glSurfaceView);
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-    glView.startTimer();
+    view.start();
   }
 
   @Override
   protected void onPause() {
-    glView.stopTimer();
+    view.stop();
     super.onPause();
   }
 }

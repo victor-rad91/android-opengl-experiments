@@ -23,6 +23,9 @@
     <activity
         android:name=".activities.TriangleTrailActivity"
         android:screenOrientation="landscape"/>
+    <activity
+        android:name=".activities.ParticleActivity"
+        android:screenOrientation="landscape"/>
   </application>
 
 </manifest>

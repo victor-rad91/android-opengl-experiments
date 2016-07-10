@@ -1,10 +1,11 @@
-package com.iquestgroup.gltest.gl;
+package com.iquestgroup.gltest.gl.view;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import com.iquestgroup.gltest.engine.SimpleColorEngine;
+import com.iquestgroup.gltest.gl.renderer.SimpleColorEngineRenderer;
 
 
 public class TriangleTrailGLSurfaceView extends GLSurfaceView implements SimpleColorEngine.EngineUpdateListener {
