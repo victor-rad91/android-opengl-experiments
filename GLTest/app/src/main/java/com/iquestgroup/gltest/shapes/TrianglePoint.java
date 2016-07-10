@@ -10,7 +10,8 @@ import java.nio.FloatBuffer;
 
 public class TrianglePoint {
 
-  private static final float DISTANCE_FROM_CENTER = 0.025f;
+  private static final float DISTANCE_FROM_CENTER = 0.05f;
+  private static final float SQRT_3 = (float) Math.sqrt(3);
 
   private final String vertexShaderCode =
       "#version 300 es 			  \n"
@@ -19,8 +20,6 @@ public class TrianglePoint {
           + "{                            \n"
           + "   gl_Position = vPosition;  \n"
           + "}                            \n";
-
-
 
   private float centerX;
   private float centerY;
@@ -70,6 +69,14 @@ public class TrianglePoint {
     isInitialized = true;
   }
 
+  public float getX() {
+    return centerX;
+  }
+
+  public float getY() {
+    return centerY;
+  }
+
   public void draw() {
     GLES30.glUseProgram(glProgram);
 
@@ -84,12 +91,12 @@ public class TrianglePoint {
     coordinates[1] = centerX - DISTANCE_FROM_CENTER;
     coordinates[2] = 0;
 
-    coordinates[3] = centerY - DISTANCE_FROM_CENTER;
-    coordinates[4] = centerX;
+    coordinates[3] = centerY - DISTANCE_FROM_CENTER / 2.0f;
+    coordinates[4] = centerX + (DISTANCE_FROM_CENTER * 3.0f) / (2.0f * SQRT_3);
     coordinates[5] = 0;
 
-    coordinates[6] = centerY + DISTANCE_FROM_CENTER;
-    coordinates[7] = centerX;
+    coordinates[6] = centerY + DISTANCE_FROM_CENTER / 2.0f;
+    coordinates[7] = centerX + (DISTANCE_FROM_CENTER * 3.0f) / (2.0f * SQRT_3);
     coordinates[8] = 0;
 
     ByteBuffer buffer = ByteBuffer.allocateDirect(coordinates.length * 4);

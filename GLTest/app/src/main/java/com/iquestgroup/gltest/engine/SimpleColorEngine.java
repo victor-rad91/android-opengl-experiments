@@ -82,8 +82,20 @@ public class SimpleColorEngine {
   }
 
   public void putPointInQueue(float x, float y, float r, float g, float b) {
+    if (!pointQueue.isEmpty()) {
+      TrianglePoint lastPoint = pointQueue.getLast();
+      if ((Math.abs(lastPoint.getX() - x) <= 0.05) && (Math.abs(lastPoint.getY() - y) <= 0.05)) {
+        queuePoint(x, y, r, g, b);
+      }
+    }
+    else {
+      queuePoint(x, y, r, g, b);
+    }
+  }
+
+  private void queuePoint(float x, float y, float r, float g, float b) {
     pointQueue.addLast(new TrianglePoint(x, y, r, g, b));
-    Log.d("SimpleColorEngine","Queue nr of elements is " + pointQueue.size());
+    Log.d("SimpleColorEngine", "Queue nr of elements is " + pointQueue.size());
     if (pointQueue.size() >= queueLength) {
       pointQueue.removeFirst();
     }
