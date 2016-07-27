@@ -2,6 +2,7 @@ package com.iquestgroup.gltest.shapes;
 
 
 import android.opengl.GLES30;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.nio.ByteBuffer;
@@ -12,14 +13,6 @@ public class TrianglePoint {
 
   private static final float DISTANCE_FROM_CENTER = 0.05f;
   private static final float SQRT_3 = (float) Math.sqrt(3);
-
-  private final String vertexShaderCode =
-      "#version 300 es 			  \n"
-          + "in vec4 vPosition;           \n"
-          + "void main()                  \n"
-          + "{                            \n"
-          + "   gl_Position = vPosition;  \n"
-          + "}                            \n";
 
   private float centerX;
   private float centerY;
@@ -37,6 +30,8 @@ public class TrianglePoint {
 
   private boolean isInitialized = false;
 
+  private float distanceFromCenter = DISTANCE_FROM_CENTER;
+
   public TrianglePoint(float centerX, float centerY, float r, float g, float b) {
     this.centerX = centerX;
     this.centerY = centerY;
@@ -45,10 +40,16 @@ public class TrianglePoint {
     this.b = b;
   }
 
-  public void init() {
+  public TrianglePoint(float r, float g, float b) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+
+  public void init(boolean projectedShader, @Nullable float[] userCoordinates) {
     if (!isInitialized) {
-      updateBuffers();
-      compileShaders();
+      updateBuffers(userCoordinates);
+      compileShaders(projectedShader);
       glProgram = GLES30.glCreateProgram();
       if (glProgram == 0) {
         Log.e("TrianglePoint","Could not create GL program");
@@ -86,18 +87,33 @@ public class TrianglePoint {
     GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 3);
   }
 
-  private void updateBuffers() {
-    coordinates[0] = centerY;
-    coordinates[1] = centerX - DISTANCE_FROM_CENTER;
-    coordinates[2] = 0;
+  public void draw(float[] mvpMatrix) {
+    GLES30.glUseProgram(glProgram);
 
-    coordinates[3] = centerY - DISTANCE_FROM_CENTER / 2.0f;
-    coordinates[4] = centerX + (DISTANCE_FROM_CENTER * 3.0f) / (2.0f * SQRT_3);
-    coordinates[5] = 0;
+    int mvpMatrixHandle = GLES30.glGetUniformLocation(glProgram, "mvpMatrix");
+    GLES30.glVertexAttribPointer(0, 3, GLES30.GL_FLOAT, false, 0, vertexBuffer);
+    GLES30.glEnableVertexAttribArray(0);
+    GLES30.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0);
+    GLES30.glDrawArrays(GLES30.GL_TRIANGLES, 0, 3);
+  }
 
-    coordinates[6] = centerY + DISTANCE_FROM_CENTER / 2.0f;
-    coordinates[7] = centerX + (DISTANCE_FROM_CENTER * 3.0f) / (2.0f * SQRT_3);
-    coordinates[8] = 0;
+  private void updateBuffers(float[] userCoordinates) {
+    if (userCoordinates == null) {
+      coordinates[0] = centerY;
+      coordinates[1] = centerX - distanceFromCenter;
+      coordinates[2] = 0;
+
+      coordinates[3] = centerY - distanceFromCenter / 2.0f;
+      coordinates[4] = centerX + (distanceFromCenter * 3.0f) / (2.0f * SQRT_3);
+      coordinates[5] = 0;
+
+      coordinates[6] = centerY + distanceFromCenter / 2.0f;
+      coordinates[7] = centerX + (distanceFromCenter * 3.0f) / (2.0f * SQRT_3);
+      coordinates[8] = 0;
+    }
+    else {
+      coordinates = userCoordinates;
+    }
 
     ByteBuffer buffer = ByteBuffer.allocateDirect(coordinates.length * 4);
     buffer.order(ByteOrder.nativeOrder());
@@ -107,7 +123,23 @@ public class TrianglePoint {
     vertexBuffer.position(0);
   }
 
-  private void compileShaders() {
+  private void compileShaders(boolean projectedShader) {
+    String vertexShaderCode = projectedShader
+        ?
+          "#version 300 es 			  \n"
+            + "uniform mat4 mvpMatrix;      \n"
+            + "in vec4 vPosition;           \n"
+            + "void main()                  \n"
+            + "{                            \n"
+            + "   gl_Position = mvpMatrix * vPosition;\n"
+            + "}                            \n"
+        :
+          "#version 300 es 			  \n"
+          + "in vec4 vPosition;           \n"
+          + "void main()                  \n"
+          + "{                            \n"
+          + "   gl_Position = vPosition;  \n"
+          + "}                            \n";
     vertexShader = loadShader(GLES30.GL_VERTEX_SHADER, vertexShaderCode);
     String fragmentShaderCode =
         "#version 300 es		 			          	\n"

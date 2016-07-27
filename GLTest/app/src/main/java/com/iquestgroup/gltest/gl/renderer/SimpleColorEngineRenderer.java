@@ -35,7 +35,7 @@ public class SimpleColorEngineRenderer implements GLSurfaceView.Renderer {
 
       for (TrianglePoint point : engine.getPointQueue()) {
         if (point != null) {
-          point.init();
+          point.init(false, null);
           point.draw();
         }
       }

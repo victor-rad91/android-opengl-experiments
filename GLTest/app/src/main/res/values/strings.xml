@@ -2,4 +2,5 @@
   <string name="app_name">GLTest</string>
   <string name="triangle_trail">Triangle trail</string>
   <string name="simple_spreading_particles_from_tap">Simple spreading particles from tap</string>
+  <string name="rotate_button_text">Camera rotation</string>
 </resources>

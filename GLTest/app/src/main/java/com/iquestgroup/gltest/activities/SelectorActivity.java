@@ -15,6 +15,7 @@ public class SelectorActivity extends Activity implements View.OnClickListener {
 
   private Button triangleTrailButton;
   private Button particleButton;
+  private Button rotateButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,8 @@ public class SelectorActivity extends Activity implements View.OnClickListener {
     triangleTrailButton.setOnClickListener(this);
     particleButton = (Button) findViewById(R.id.simple_particle_button);
     particleButton.setOnClickListener(this);
+    rotateButton = (Button) findViewById(R.id.rotate_button);
+    rotateButton.setOnClickListener(this);
   }
 
   @Override
@@ -34,6 +37,9 @@ public class SelectorActivity extends Activity implements View.OnClickListener {
     else if (view.equals(particleButton)) {
       startParticleActivity();
     }
+    else if (view.equals(rotateButton)) {
+      startCameraRotationActivity();
+    }
   }
 
   private void startTriangleTrailActivity() {
@@ -43,6 +49,11 @@ public class SelectorActivity extends Activity implements View.OnClickListener {
 
   private void startParticleActivity() {
     Intent intent = new Intent(this, ParticleActivity.class);
+    startActivity(intent);
+  }
+
+  private void startCameraRotationActivity() {
+    Intent intent = new Intent(this, CameraRotationActivity.class);
     startActivity(intent);
   }
 }

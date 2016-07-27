@@ -26,6 +26,9 @@
     <activity
         android:name=".activities.ParticleActivity"
         android:screenOrientation="landscape"/>
+    <activity
+        android:name=".activities.CameraRotationActivity"
+        android:screenOrientation="landscape" />
   </application>
 
 </manifest>
